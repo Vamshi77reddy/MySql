@@ -1,0 +1,241 @@
+UC1-Ability to create addressBook DB
+
+mysql> create database addressBook_services;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use addressBook_services;
+Database changed
+
+UC2-Ability to create a Address Book Table with first and last names, address, city, state, zip, phone number and email as its attributes.
+
+mysql> create table addressBook(first_name varchar(40) not null,
+    ->       last_name varchar(40) not null,
+    ->       address varchar(40),
+    ->       city varchar(40),
+    ->       state varchar(40),
+    ->       zip int,
+    ->       phone_number long,
+    ->       emain varchar(40));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++--------------------------------+
+| Tables_in_addressbook_services |
++--------------------------------+
+| addressbook                    |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> desc  addressBook;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| first_name   | varchar(40) | NO   |     | NULL    |       |
+| last_name    | varchar(40) | NO   |     | NULL    |       |
+| address      | varchar(40) | YES  |     | NULL    |       |
+| city         | varchar(40) | YES  |     | NULL    |       |
+| state        | varchar(40) | YES  |     | NULL    |       |
+| zip          | int         | YES  |     | NULL    |       |
+| phone_number | mediumtext  | YES  |     | NULL    |       |
+| emain        | varchar(40) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+
+
+ UC3- Ability to insert new Contacts to AddressBook
+
+mysql> insert into addressBook(first_name,last_name,address,city,
+    ->        state,zip,phone_number,emain)values
+    ->        ("vamshi","reddy","uppal","hyderabad","telangana",500003,7730006563,"vamshi@gmail.com")
+    ->        ,("sai","kumar","uppal","hyderabad","telangana",500003,8790736824,"sai@gmail.com"),
+    ->        ("rahul","reddy","keesara","hyderabad","telangana",508126,8928667789,"rahul@gmail.com"),
+    ->        ("rohith","kumar","vizag","vishakapatanam","andrapradesh",508521,7863427829,"rohith@gmail.com"),
+    ->        ("bhargav","sheik","thuni","vishakapatanam","andrapradesh",508932,6655334289,"bhargav@gmail.com");
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>        select* from addressBook;
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+| first_name | last_name | address | city           | state        | zip    | phone_number | emain             |
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+| vamshi     | reddy     | uppal   | hyderabad      | telangana    | 500003 | 7730006563   | vamshi@gmail.com  |
+| sai        | kumar     | uppal   | hyderabad      | telangana    | 500003 | 8790736824   | sai@gmail.com     |
+| rahul      | reddy     | keesara | hyderabad      | telangana    | 508126 | 8928667789   | rahul@gmail.com   |
+| rohith     | kumar     | vizag   | vishakapatanam | andrapradesh | 508521 | 7863427829   | rohith@gmail.com  |
+| bhargav    | sheik     | thuni   | vishakapatanam | andrapradesh | 508932 | 6655334289   | bhargav@gmail.com |
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+5 rows in set (0.00 sec)
+
+
+
+UC4- Ability to edit existing contact person using their name
+
+mysql> update addressBook set phone_number=8897323866 where first_name="rahul";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from addressBook;
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+| first_name | last_name | address | city           | state        | zip    | phone_number | emain             |
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+| vamshi     | reddy     | uppal   | hyderabad      | telangana    | 500003 | 7730006563   | vamshi@gmail.com  |
+| sai        | kumar     | uppal   | hyderabad      | telangana    | 500003 | 8790736824   | sai@gmail.com     |
+| rahul      | reddy     | keesara | hyderabad      | telangana    | 508126 | 8897323866   | rahul@gmail.com   |
+| rohith     | kumar     | vizag   | vishakapatanam | andrapradesh | 508521 | 7863427829   | rohith@gmail.com  |
+| bhargav    | sheik     | thuni   | vishakapatanam | andrapradesh | 508932 | 6655334289   | bhargav@gmail.com |
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+5 rows in set (0.00 sec)
+
+
+
+UC5-Ability to delete a person using person's name
+
+mysql> delete from addressBook where first_name="rohith";
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select* from addressBook;
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+| first_name | last_name | address | city           | state        | zip    | phone_number | emain             |
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+| vamshi     | reddy     | uppal   | hyderabad      | telangana    | 500003 | 7730006563   | vamshi@gmail.com  |
+| sai        | kumar     | uppal   | hyderabad      | telangana    | 500003 | 8790736824   | sai@gmail.com     |
+| rahul      | reddy     | keesara | hyderabad      | telangana    | 508126 | 8897323866   | rahul@gmail.com   |
+| bhargav    | sheik     | thuni   | vishakapatanam | andrapradesh | 508932 | 6655334289   | bhargav@gmail.com |
++------------+-----------+---------+----------------+--------------+--------+--------------+-------------------+
+4 rows in set (0.00 sec)
+
+
+
+UC6-Ability to Retrieve Person belonging to a City or State from the Address Book
+
+mysql> select state,city from addressBook where first_name="vamshi";
++-----------+-----------+
+| state     | city      |
++-----------+-----------+
+| telangana | hyderabad |
++-----------+-----------+
+1 row in set (0.00 sec)
+
+
+UC7-Ability to understand the size of address book by City and State
+
+
+mysql> select count(city),count(state) from addressBook where city="hyderabad" and state="telangana";
++-------------+--------------+
+| count(city) | count(state) |
++-------------+--------------+
+|           3 |            3 |
++-------------+--------------+
+1 row in set (0.00 sec)
+
+
+
+
+UC8-Ability to retrieve entries sorted alphabetically by Person’s name for a given city
+
+mysql> select first_name from addressBook where city="hyderabad" order by first_name asc;
++------------+
+| first_name |
++------------+
+| rahul      |
+| sai        |
+| vamshi     |
++------------+
+3 rows in set (0.00 sec)
+
+
+UC9-Ability to identify each Address Book with name and Type.
+
+mysql> alter table addressBook add address_book_name varchar(20) after last_name;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>       alter table addressBook add type varchar(20) after address_book_name;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>       update addressBook set address_book_name="Relation",type="Family" where first_name in("vamshi","sai");
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql>             update addressBook set address_book_name="frnd",type="friends" where first_name in("rahul");
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>       update addressBook set address_book_name="work",type="workfriend" where first_name in("bhargav");
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from addressBook;
++------------+-----------+-------------------+------------+---------+----------------+--------------+--------+--------------+-------------------+
+| first_name | last_name | address_book_name | type       | address | city           | state        | zip    | phone_number | emain             |
++------------+-----------+-------------------+------------+---------+----------------+--------------+--------+--------------+-------------------+
+| vamshi     | reddy     | Relation          | Family     | uppal   | hyderabad      | telangana    | 500003 | 7730006563   | vamshi@gmail.com  |
+| sai        | kumar     | Relation          | Family     | uppal   | hyderabad      | telangana    | 500003 | 8790736824   | sai@gmail.com     |
+| rahul      | reddy     | frnd              | friends    | keesara | hyderabad      | telangana    | 508126 | 8897323866   | rahul@gmail.com   |
+| bhargav    | sheik     | work              | workfriend | thuni   | vishakapatanam | andrapradesh | 508932 | 6655334289   | bhargav@gmail.com |
++------------+-----------+-------------------+------------+---------+----------------+--------------+--------+--------------+-------------------+
+4 rows in set (0.00 sec)
+
+
+
+
+UC10-Ability to get number of contact persons i.e. count by type
+
+mysql> select count(type) from addressbook where type="family";
++-------------+
+| count(type) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>       select count(type) from addressbook where type="friends";
++-------------+
+| count(type) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>       select count(type) from addressbook where type="workfriend";
++-------------+
+| count(type) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+
+UC11-Ability to add person to both Friend and Family
+
+mysql> insert into addressBook(first_name,last_name,address_book_name,type,address,city,state,zip,phone_number,emain)
+    ->       values("venu","reddy","Relation","Family","hyd","hyd","telangana",508234,7876543222,"venu@gmail.com"),
+    ->       ("Vishal","yadav","frnd","friends","ghatkesar","hyd","telangana",508432,9987654356,"vishal@yahoo.in");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> ^C
+mysql> insert into addressBook(first_name,last_name,address_book_name,type,address,city,state,zip,phone_number,emain)
+    ->       values("venu","reddy","Relation","Family","hyd","hyd","telangana",508234,7876543222,"venu@gmail.com"),
+    ->       ("Vishal","yadav","frnd","friends","ghatkesar","hyd","telangana",508432,9987654356,"vishal@yahoo.in");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select* from addressBook;
++------------+-----------+-------------------+------------+-----------+----------------+--------------+--------+--------------+-------------------+
+| first_name | last_name | address_book_name | type       | address   | city           | state        | zip    | phone_number | emain             |
++------------+-----------+-------------------+------------+-----------+----------------+--------------+--------+--------------+-------------------+
+| vamshi     | reddy     | Relation          | Family     | uppal     | hyderabad      | telangana    | 500003 | 7730006563   | vamshi@gmail.com  |
+| sai        | kumar     | Relation          | Family     | uppal     | hyderabad      | telangana    | 500003 | 8790736824   | sai@gmail.com     |
+| rahul      | reddy     | frnd              | friends    | keesara   | hyderabad      | telangana    | 508126 | 8897323866   | rahul@gmail.com   |
+| bhargav    | sheik     | work              | workfriend | thuni     | vishakapatanam | andrapradesh | 508932 | 6655334289   | bhargav@gmail.com |
+| venu       | reddy     | Relation          | Family     | hyd       | hyd            | telangana    | 508234 | 7876543222   | venu@gmail.com    |
+| Vishal     | yadav     | frnd              | friends    | ghatkesar | hyd            | telangana    | 508432 | 9987654356   | vishal@yahoo.in   |
+| venu       | reddy     | Relation          | Family     | hyd       | hyd            | telangana    | 508234 | 7876543222   | venu@gmail.com    |
+| Vishal     | yadav     | frnd              | friends    | ghatkesar | hyd            | telangana    | 508432 | 9987654356   | vishal@yahoo.in   |
++------------+-----------+-------------------+------------+-----------+----------------+--------------+--------+--------------+-------------------+
+8 rows in set (0.00 sec)
+
